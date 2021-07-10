@@ -1,11 +1,11 @@
 <% layout('layouts/boilerplate') %>
 
-<h1>
-    Informações sobre <%=campground.title %>
-</h1>
-<h2>
-    <%= campground.location %>
-</h2>
+<h1>Informações sobre <%=campground.title %></h1>
+<h2><%= campground.location %></h2>
+<img src="<%= campground.image %> " alt="">
+<h3> Diária: R$ <%= campground.price.toFixed(2) %> </h3>
+<h2>Descrição: </h2>
+<p> <%= campground.description %>  </p>
 <div>
     <a href="/campgrounds/<%=campground._id %>/edit">Editar</a>
     <br>
