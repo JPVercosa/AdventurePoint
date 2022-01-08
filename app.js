@@ -3,7 +3,7 @@ const app = express();                                  //Inicia o Express
 const path = require('path');                           //Para configurar o diretório views corretamente a partir de app.set
 const mongoose = require('mongoose');                   //Comunicação com o banco de Dados: MongoDB
 const methodOverride = require('method-override');      //Possibilita utilizar métodos além de GET e POST
-const morgan = require('morgan');                       //Imprime logs de rede no console após conexões
+const morgan = require('morgan');                       //Imprime logs de rede no console após conexões [MIDDLEWARE]
 const ejsMate = require('ejs-mate');                    //Permite a adição de Layouts
 
 const Campground = require('./models/campground');
@@ -24,8 +24,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(morgan(':method ":url" :status :res[content-type] :remote-addr - :response-time ms'));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));   //Comando para conseguir receber um objeto via Body, com informações que foram enviadas através do método POST via URL
 app.use(methodOverride('_method'));
+
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -41,8 +42,8 @@ app.get('/campgrounds/new', (req, res) => {
 })
 
 app.post('/campgrounds', async (req, res) => {
-    const newCamp = new Campground(req.body.campground);
-    await newCamp.save();
+    const newCamp = new Campground(req.body.campground);  //Pegando as informações que vieram via POST de "wwww.../campground/new"
+    await newCamp.save();                                 //Salvando o novo modelo de Campground no Mongo
     res.redirect(`/campgrounds/${newCamp._id}`)
 })
 
@@ -72,6 +73,10 @@ app.delete('/campgrounds/:id', async (req, res) => {
     res.redirect('/campgrounds');
 })
 
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(404).send("404 - Page not Found")
+})
 
 app.listen(3100, () => {
     console.log("Rodando na porta 3100")

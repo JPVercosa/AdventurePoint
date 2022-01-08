@@ -3,30 +3,46 @@
 <div class="row">
     <h1 class="text-center">Adicionar novo Ponto</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds" method="POST">
+        <form action="/campgrounds" method="POST" novalidate class="validate-form">
             <div class="mb-3">
                 <label class="form-label" for="title">Insira o Título</label>
-                <input class="form-control" type="text" id="title" name="campground[title]">
+                <input class="form-control" type="text" id="title" name="campground[title]" required>
+                <div class="invalid-feedback">
+                    Por favor, adicione um nome a esse Ponto.
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Insira o Local</label>
-                <input class="form-control" type="text" id="location" name="campground[location]">
+                <input class="form-control" type="text" id="location" name="campground[location]" required>
+                <div class="invalid-feedback">
+                    Por favor, adicione uma localização a esse Ponto.
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="image">Insira a URL da imagem</label>
-                <input class="form-control" type="text" id="image" name="campground[image]">
+                <input class="form-control" type="text" id="image" name="campground[image]" required>
+                <div class="invalid-feedback">
+                    Por favor, adicione uma imagem a esse Ponto.
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
                 <div class="input-group">
                     <span class="input-group-text" id="price-label">$</span>
                     <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
-                        aria-describedby="price-label" name="campground[price]">
+                        aria-describedby="price-label" name="campground[price]" required>
+                    <div class="invalid-feedback">
+                        Por favor, adicione um preço a esse Ponto.
+                    </div>
                 </div>
+                
             </div>
             <div class="mb-3">
                 <label class="form-label" for="description">Insira a descrição</label>
-                <textarea class="form-control" type="text" id="description" name="campground[description]"></textarea>
+                <textarea class="form-control" type="text" id="description" name="campground[description]" required></textarea>
+                <div class="invalid-feedback">
+                    Por favor adicione uma descrição a esse Ponto.
+                </div>
             </div>
             <div class="mb-3"><button class="btn btn-success">Adicionar</button></div>
         </form>
@@ -35,6 +51,8 @@
                 
     </div>
 </div>
+
+
 
 
 <!-- <h1>Insira as informações do novo campo</h1>
