@@ -17,7 +17,8 @@
 
         <main class="container mt-4">
 
-            <%- body %>
+            <%- include('../partials/flash') %>
+                <%- body %>
 
         </main>
 
@@ -30,25 +31,7 @@
                 integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
                 crossorigin="anonymous"></script>
 
-            <script>
-                (function () {
-                    'use strict'
-
-                    const forms = document.querySelectorAll('.validate-form')
-
-                    Array.from(forms)
-                        .forEach(form => {
-                            form.addEventListener('submit', event => {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-            </script>
+            <script src="/javascripts/validateForms.js"></script>
 </body>
 
 </html>
