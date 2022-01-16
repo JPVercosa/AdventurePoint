@@ -1,0 +1,25 @@
+<% layout('layouts/boilerplate') %>
+
+
+<div class="row justify-content-center">
+    <div class="col-4">
+        <h1>Faça seu Login</h1>
+        <form action="/login" class="validate-form" method="POST" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="username">Nome de usuário:</label>
+                <input class="form-control" type="text" id="username" name="username" required>
+                <div class="invalid-feedback">
+                    Por favor, adicione seu nome de usuário.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Senha:</label>
+                <input class="form-control" type="password" id="password" name="password" required>
+                <div class="invalid-feedback">
+                    Por favor, adicione uma senha válida.
+                </div>
+            </div>
+            <button class="btn btn-success">Entrar</button>
+        </form>
+    </div>
+</div>

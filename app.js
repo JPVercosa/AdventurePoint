@@ -5,18 +5,27 @@ const path = require('path');                           //Para configurar o dire
 const mongoose = require('mongoose');                   //Comunicação com o banco de Dados: MongoDB
 const methodOverride = require('method-override');      //Possibilita utilizar métodos além de GET e POST
 const morgan = require('morgan');                       //Imprime logs de rede no console após conexões [MIDDLEWARE]
-const ejsMate = require('ejs-mate');
-const flash = require('connect-flash')                    //Permite a adição de Layouts
+const ejsMate = require('ejs-mate');                    //Permite a adição de Layouts
+const flash = require('connect-flash')                  //Permite a adição de notificações
+const passport = require('passport');
+const localPassport = require('passport-local');
+
+
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError')
 
 //Models
 const Campground = require('./models/campground');
 const Review = require('./models/review')
+const User = require('./models/user')
+
+
 
 //Rotas
 const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
+const usersRoutes = require('./routes/users')
+
 
 const sessionConfig = {
     secret: 'MYSECRET',
@@ -28,8 +37,6 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
-
-
 
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
@@ -46,12 +53,19 @@ app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(express.urlencoded({ extended: true }));   //Comando para conseguir receber um objeto via Body, com informações que foram enviadas através do método POST
+app.use(methodOverride('_method'));                //Utiliza Query string para alterar o tipo método enviando por um formulário.
+app.use(morgan(':method ":url" :status :res[content-type] :remote-addr - :response-time ms'));  //Printa conexões no console
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(morgan(':method ":url" :status :res[content-type] :remote-addr - :response-time ms'));
-app.use(express.urlencoded({ extended: true }));   //Comando para conseguir receber um objeto via Body, com informações que foram enviadas através do método POST via URL
-app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(passport.initialize());
+app.use(passport.session())
+
+passport.use(new localPassport(User.authenticate()));
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 
 app.use((req, res, next) => {
     res.locals.flashSuccess = req.flash('success');
@@ -59,8 +73,11 @@ app.use((req, res, next) => {
     next();
 })
 
+
+
 app.use('/campgrounds', campgroundsRoutes);
 app.use('/campgrounds/:id/reviews', reviewsRoutes);
+app.use('/', usersRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');
