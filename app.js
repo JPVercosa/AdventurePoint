@@ -55,7 +55,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));   //Comando para conseguir receber um objeto via Body, com informações que foram enviadas através do método POST
 app.use(methodOverride('_method'));                //Utiliza Query string para alterar o tipo método enviando por um formulário.
-app.use(morgan(':method ":url" :status :res[content-type] :remote-addr - :response-time ms'));  //Printa conexões no console
+app.use(morgan(':method ":url" :status :remote-addr - :response-time ms'));  //Printa conexões no console
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session(sessionConfig));
 app.use(flash());
@@ -68,6 +68,7 @@ passport.deserializeUser(User.deserializeUser())
 
 
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.flashSuccess = req.flash('success');
     res.locals.flashError = req.flash('error')
     next();

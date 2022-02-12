@@ -5,7 +5,8 @@ const ExpressError = require('../utils/ExpressError')
 const Campground = require('../models/campground');
 const Review = require('../models/review')
 const { campgroundSchema } = require('../utils/schemas')
-const { isLoggedIn } = require('../middleware')
+const { isLoggedIn } = require('../middleware');
+const campground = require('../models/campground');
 
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body)
@@ -23,12 +24,12 @@ router.get('/', catchAsync(async (req, res) => {
 }))
 
 router.get('/new', isLoggedIn, (req, res) => {
-
     res.render('campgrounds/new');
 })
 
 router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res) => {
     const newCamp = new Campground(req.body.campground);  //Pegando as informações que vieram via POST de "wwww.../campground/new"
+    newCamp.author = req.user._id;                        //Adicionando a informação de quem é o autor
     await newCamp.save();                                 //Salvando o novo modelo de Campground no Mongo
     req.flash('success', 'Novo Ponto criado!')
     res.redirect(`/campgrounds/${newCamp._id}`)
@@ -37,7 +38,7 @@ router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res) => 
 
 router.get('/:id', catchAsync(async (req, res) => {
     const { id } = req.params
-    const campground = await Campground.findById(id).populate('reviews');
+    const campground = await Campground.findById(id).populate('reviews').populate('author');
     if (!campground) {
         req.flash('error', 'Ponto não encontrado')
         return res.redirect('/campgrounds')
