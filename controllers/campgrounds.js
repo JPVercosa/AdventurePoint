@@ -1,3 +1,4 @@
+const campground = require('../models/campground');
 const Campground = require('../models/campground');
 
 
@@ -12,6 +13,7 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createCampground = async (req, res) => {
     const newCamp = new Campground(req.body.campground);  //Pegando as informações que vieram via POST de "wwww.../campground/new"
+    newCamp.images = req.files.map(file => ({ url: file.path, filename: file.filename }))  //Pegando as imagens com Muter+Cloudinary
     newCamp.author = req.user._id;                        //Adicionando a informação de quem é o autor
     await newCamp.save();                                 //Salvando o novo modelo de Campground no Mongo
     req.flash('success', 'Novo Ponto criado!')
