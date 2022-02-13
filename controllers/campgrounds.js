@@ -1,6 +1,7 @@
 const campground = require('../models/campground');
 const Campground = require('../models/campground');
 
+const { cloudinary } = require("../cloudinary/cloudStorage");
 
 module.exports.index = async (req, res) => {
     const allCampgrounds = await Campground.find({});
@@ -16,6 +17,7 @@ module.exports.createCampground = async (req, res) => {
     newCamp.images = req.files.map(file => ({ url: file.path, filename: file.filename }))  //Pegando as imagens com Muter+Cloudinary
     newCamp.author = req.user._id;                        //Adicionando a informação de quem é o autor
     await newCamp.save();                                 //Salvando o novo modelo de Campground no Mongo
+    console.log(newCamp)
     req.flash('success', 'Novo Ponto criado!')
     res.redirect(`/campgrounds/${newCamp._id}`)
 }
@@ -48,6 +50,15 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateCampground = async (req, res) => {
     const { id } = req.params
     const camp = await Campground.findByIdAndUpdate(id, { ...req.body.campground })
+    const imgs = req.files.map(file => ({ url: file.path, filename: file.filename }))
+    camp.images.push(...imgs)
+    if(req.body.deleteImages){
+        for(let filename of req.body.deleteImages){
+            await cloudinary.uploader.destroy(filename)
+        }
+        await camp.updateOne({$pull: { images: { filename: { $in: req.body.deleteImages }}}})
+    }
+    await camp.save()
     req.flash('success', 'Ponto atualizado com sucesso')
     res.redirect(`/campgrounds/${id}`)
 }

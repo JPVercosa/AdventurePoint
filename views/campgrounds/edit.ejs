@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center">Editar as informações de <%= campground.title %></h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validate-form">
+        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Título:</label>
                 <input class="form-control" type="text" id="title" name="campground[title]"
@@ -18,14 +18,6 @@
                     value="<%=campground.location %>" required>
                 <div class="invalid-feedback">
                     Por favor, adicione uma localização a esse Ponto.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="image">URL da Imagem:</label>
-                <input class="form-control" type="text" id="image" name="campground[image]"
-                    value="<%=campground.image %>" required>
-                <div class="invalid-feedback">
-                    Por favor, adicione uma imagem a esse Ponto.
                 </div>
             </div>
             <div class="mb-3">
@@ -48,6 +40,19 @@
                     Por favor, adicione uma descrição a esse Ponto.
                 </div>
             </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Adicione mais imagens:</label>
+                <input type="file" name="image" multiple>
+            </div>
+            <de class="mb-3">
+                <% campground.images.forEach((img, i) => {  %>
+                    <img src="<%= img.url%>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="iamge-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                    </div>
+                    <label for="iamge-<%=i%>">Delete?</label>
+                    <% }) %>  
+            </de>
             <div class="mb-3">
                 <button class="btn btn-success">Editar</button>
             </div>

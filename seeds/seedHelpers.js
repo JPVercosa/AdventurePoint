@@ -39,3 +39,26 @@ module.exports.places = [
     'do Céu Azul',
     'do Vale Verde'
 ]
+
+module.exports.boas = [
+    'muito lindo',
+    'muito bonito',
+    'bem legal',
+    'com muito contato com a natureza',
+    'divertido'
+]
+
+module.exports.ruins = [
+    'muito frio',
+    'abafado',
+    'muito longe',
+    'chato',
+    'pouca infraestrutura'
+]
+
+module.exports.neutras = [
+    'voltaria com certeza',
+    'não pretendo voltar',
+    'por do sol lindo',
+    'muito movimentado'
+]
