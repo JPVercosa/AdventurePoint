@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
+
 const catchAsync = require('../utils/catchAsync');
 
 const campgrounds = require("../controllers/campgrounds")
@@ -11,6 +14,7 @@ const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+
 
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 

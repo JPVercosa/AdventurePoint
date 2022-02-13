@@ -1,3 +1,7 @@
+if(procces.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+}
+
 const express = require('express');
 const session = require('express-session')
 const app = express();                                  //Inicia o Express

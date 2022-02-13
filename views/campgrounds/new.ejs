@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center">Adicionar novo Ponto</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds" method="POST" novalidate class="validate-form">
+        <form action="/campgrounds" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Insira o Título</label>
                 <input class="form-control" type="text" id="title" name="campground[title]" required>
@@ -16,13 +16,6 @@
                 <input class="form-control" type="text" id="location" name="campground[location]" required>
                 <div class="invalid-feedback">
                     Por favor, adicione uma localização a esse Ponto.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="image">Insira a URL da imagem</label>
-                <input class="form-control" type="text" id="image" name="campground[image]" required>
-                <div class="invalid-feedback">
-                    Por favor, adicione uma imagem a esse Ponto.
                 </div>
             </div>
             <div class="mb-3">
@@ -42,6 +35,14 @@
                 <textarea class="form-control" type="text" id="description" name="campground[description]" required></textarea>
                 <div class="invalid-feedback">
                     Por favor adicione uma descrição a esse Ponto.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Adicione Imagens</label>
+                <input type="file" name="image" id="" multiple>
+                <!-- <input class="form-control" type="text" id="image" name="campground[image]" required> -->
+                <div class="invalid-feedback">
+                    Por favor, adicione uma imagem a esse Ponto.
                 </div>
             </div>
             <div class="mb-3"><button class="btn btn-success">Adicionar</button></div>
