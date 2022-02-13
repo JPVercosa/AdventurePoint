@@ -19,6 +19,7 @@ const Campground = require('./models/campground');
 const Review = require('./models/review')
 const User = require('./models/user')
 
+//Controllers
 
 
 //Rotas
@@ -73,7 +74,6 @@ app.use((req, res, next) => {
     res.locals.flashError = req.flash('error')
     next();
 })
-
 
 
 app.use('/campgrounds', campgroundsRoutes);
