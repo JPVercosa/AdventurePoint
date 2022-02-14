@@ -31,12 +31,17 @@ module.exports.createCampground = async (req, res) => {
 
 module.exports.showCampground = async (req, res) => {
     const { id } = req.params
-    const campground = await Campground.findById(id).populate({
+    const campground = await Campground.findById(id)
+    .populate({
         path: 'reviews',
         populate: {
-            path: 'author'
+            path: 'author',
         }
-    }).populate('author');
+    })
+    .populate({ 
+        path: 'author',
+        select: '-email'
+    });
     if (!campground) {
         req.flash('error', 'Ponto não encontrado')
         return res.redirect('/campgrounds')

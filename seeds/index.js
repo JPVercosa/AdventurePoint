@@ -37,8 +37,8 @@ const createDescription = async (title) => {
         presence_penalty: 0.0,
       })
     
-    console.log(response.data.choices[0].text)
-    return response.data.choices[0].text
+    console.log(response.data.choices[0].text.trim())
+    return response.data.choices[0].text.trim()
 }
 
 const seedDB = async () => {
@@ -49,11 +49,16 @@ const seedDB = async () => {
         const title = `${sample(descriptors)} ${sample(places)}`
         const description = await createDescription(title)
         const newCamp = new Campground({
-            author: '61e469ef35f28207f650a366',
+            author: '6207b7affe041803e135b783',
             location: `${cities[rand].city}, ${cities[rand].admin_name}`,
             title: title,
             description: description,
             price,
+            geometry : 
+                { 
+                    type: "Point", 
+                    coordinates: [ -43.2383, -22.9814 ] 
+                },
             images: [
                 {
                   url: 'https://res.cloudinary.com/adventurepoint/image/upload/v1644775070/AdventurePointsImages/a5qmtn5pb4c7ieljiqnw.jpg',

@@ -28,7 +28,7 @@
         <div class="card mb-3">
             <!-- <img src="<%= campground.image%>" class="card-img-top" alt="..."> -->
             <div class="card-body">
-                <h5 class="card-title">Informações sobre <%= campground.title%></h5>
+                <h5 class="card-title"><%= campground.title%></h5>
                 <p class="card-text"><%= campground.description%></p>
             </div>
             <ul class="list-group list-group-flush">
@@ -104,5 +104,6 @@
 
 <script>
     const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+    const campground = <%-JSON.stringify(campground)%>
 </script>
 <script src="/javascripts/showMap.js"></script>
