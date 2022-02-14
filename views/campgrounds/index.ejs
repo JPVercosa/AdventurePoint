@@ -6,7 +6,7 @@
     <div class="card" mb-3>
         <div class="row">
             <div class="col-md-4">
-                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="<%= campground.images[Math.floor(Math.random() * 3)].url %>" alt=""></a>
+                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="<%= campground.images[Math.floor(Math.random() * campground.images.length)].url %>" alt=""></a>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
