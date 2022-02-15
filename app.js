@@ -15,10 +15,16 @@ const passport = require('passport');
 const localPassport = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
+//process.env.DB_URL
+//'mongodb://localhost:27017/yelp-camp'
+const MongoDBStore = require("connect-mongo");
+
 
 
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError')
+//const { scriptSrcUrls, styleSrcUrl, connectSrcUrls, fontSrcUrls } = require('./utils/securityPolicy')
 
 //Models
 const Campground = require('./models/campground');
@@ -33,10 +39,19 @@ const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
 const usersRoutes = require('./routes/users')
 
+const secret = process.env.SESSION_SECRET || 'MYSECRET'
+const options = {
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+}
 
 const sessionConfig = {
+    store: MongoDBStore.create(options),
     name: 'user',
-    secret: 'MYSECRET', //process.env.SESSION_SECRET
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -48,7 +63,8 @@ const sessionConfig = {
 }
 
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
+//'mongodb://localhost:27017/yelp-camp'
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => {
         console.log("Connected to Mongo")
     })
@@ -71,7 +87,53 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(mongoSanitize())
-app.use(helmet({ contentSecurityPolicy: false}))
+app.use(helmet())
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net/"
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/adventurepoint/",
+                "https://images.unsplash.com/",
+                "https://www.epayment.com.ng"
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser())

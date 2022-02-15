@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-4">
                 <% if(campground.images.length) {%> 
-                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="<%= campground.images[Math.floor(Math.random() * campground.images.length)].url %>" alt=""></a>
+                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="<%= campground.images[Math.floor(Math.random() * campground.images.length)].url %>" alt="" crossorigin></a>
                 <%} else {%>
-                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="" alt=""></a>
+                <a href="/campgrounds/<%= campground.id %>"><img class="img-thumbnail" src="" alt="" crossorigin></a>
                 <% } %> 
             </div>
             <div class="col-md-8">

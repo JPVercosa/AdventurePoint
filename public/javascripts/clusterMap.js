@@ -6,8 +6,6 @@ const map = new mapboxgl.Map({
     zoom: 3
 });
 
-console.log(campgrounds)
-
 map.addControl(new mapboxgl.NavigationControl())
 
 map.on('load', () => {
@@ -107,7 +105,6 @@ map.on('load', () => {
     map.on('click', 'unclustered-point', (e) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const { popUpMarkup } = e.features[0].properties;
-        console.log(e.features[0])
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
