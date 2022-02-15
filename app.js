@@ -167,6 +167,7 @@ app.use((err, req, res, next) => {
     res.status(status).render('error', { err })
 })
 
-app.listen(3100, () => {
-    console.log("Rodando na porta 3100")
+const port = process.env.PORT || 3100
+app.listen(port, () => {
+    console.log(`Rodando na porta ${port}`)
 })
