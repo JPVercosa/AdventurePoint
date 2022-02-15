@@ -19,4 +19,6 @@ In the image below you can see some topics that were taught in the course:
 
 ![Course Content](https://user-images.githubusercontent.com/27090431/154109011-58283ee5-1931-46b5-81e5-ddb67b7e65cf.png)
 
+Made by [JPVercosa](https://github.com/JPVercosa) [Linkedin](linkedin.com/in/joão-pedro-k-de-q-verçosa-ab24b5210)
+
 
