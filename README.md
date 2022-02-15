@@ -2,8 +2,6 @@
 
 # AdventurePoint
 
-- [The Web Developer Udemy Course](https://www.udemy.com/course/the-web-developer-bootcamp/)
-
 This site was built during [The Web Developer Udemy Course](https://www.udemy.com/course/the-web-developer-bootcamp/).
 
 All of it content is fictional.
