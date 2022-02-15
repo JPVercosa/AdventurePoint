@@ -1,6 +1,6 @@
 ![AdventurePoint](https://user-images.githubusercontent.com/27090431/154109646-150e818a-0b3c-488e-88ac-8cf707d991bb.png)
 
-# AdventurPoint
+# AdventurePoint
 
 - [The Web Developer Udemy Course](https://www.udemy.com/course/the-web-developer-bootcamp/)
 
