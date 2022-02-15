@@ -87,7 +87,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(mongoSanitize())
-app.use(helmet())
+app.use(helmet({ crossOriginEmbedderPolicy: false }))
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
