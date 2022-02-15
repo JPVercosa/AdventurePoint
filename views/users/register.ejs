@@ -1,31 +1,40 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="row justify-content-center">
-    <div class="col-4">
-        <h1>Faça seu Registro</h1>
-        <form action="/register" class="validate-form" method="POST" novalidate>
-            <div class="mb-3">
-                <label class="form-label" for="username">Nome de usuário:</label>
-                <input class="form-control" type="text" id="username" name="username" required>
-                <div class="invalid-feedback">
-                    Por favor, adicione seu nome de usuário.
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+                    alt="" class="card-img-top" />
+                <div class="card-body">
+                    <h1 class="card-title ml-4">Faça seu Registro</h1>
+                    <form action="/register" class="validate-form" method="POST" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Nome de usuário:</label>
+                            <input class="form-control" type="text" id="username" name="username" required autofocus>
+                            <div class="invalid-feedback">
+                                Por favor, adicione seu nome de usuário.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email:</label>
+                            <input class="form-control" type="email" id="email" name="email" required>
+                            <div class="invalid-feedback">
+                                Por favor, insira um email válido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Senha:</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+                            <div class="invalid-feedback">
+                                Por favor, adicione uma senha válida.
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block">Registrar</button>
+                    </form>
                 </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="email">Email:</label>
-                <input class="form-control" type="email" id="email" name="email" required>
-                <div class="invalid-feedback">
-                    Por favor, insira um email válido.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password">Senha:</label>
-                <input class="form-control" type="password" id="password" name="password" required>
-                <div class="invalid-feedback">
-                    Por favor, adicione uma senha válida.
-                </div>
-            </div>
-            <button class="btn btn-success">Registrar</button>
-        </form>
+        </div>
     </div>
 </div>
+

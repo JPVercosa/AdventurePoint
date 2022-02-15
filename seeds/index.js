@@ -43,7 +43,7 @@ const createDescription = async (title) => {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) {
         const rand = Math.floor(Math.random() * 474);
         const price = Math.floor(Math.random() * 200 + 50);
         const title = `${sample(descriptors)} ${sample(places)}`
@@ -57,7 +57,7 @@ const seedDB = async () => {
             geometry : 
                 { 
                     type: "Point", 
-                    coordinates: [ -43.2383, -22.9814 ] 
+                    coordinates: [ cities[rand].lng, cities[rand].lat ] 
                 },
             images: [
                 {

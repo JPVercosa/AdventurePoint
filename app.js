@@ -13,6 +13,8 @@ const ejsMate = require('ejs-mate');                    //Permite a adição de 
 const flash = require('connect-flash')                  //Permite a adição de notificações
 const passport = require('passport');
 const localPassport = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
 
 
 const catchAsync = require('./utils/catchAsync');
@@ -33,11 +35,13 @@ const usersRoutes = require('./routes/users')
 
 
 const sessionConfig = {
-    secret: 'MYSECRET',
+    name: 'user',
+    secret: 'MYSECRET', //process.env.SESSION_SECRET
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        //secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -66,6 +70,8 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session())
+app.use(mongoSanitize())
+app.use(helmet({ contentSecurityPolicy: false}))
 
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser())
@@ -73,6 +79,7 @@ passport.deserializeUser(User.deserializeUser())
 
 
 app.use((req, res, next) => {
+
     res.locals.currentUser = req.user;
     res.locals.flashSuccess = req.flash('success');
     res.locals.flashError = req.flash('error')
