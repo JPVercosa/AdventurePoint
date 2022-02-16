@@ -24,6 +24,6 @@ In the image below you can see some topics that were taught in the course:
 Made by [JPVercosa](https://github.com/JPVercosa) 
 
 Contact me:
-[Linkedin](linkedin.com/in/joão-pedro-k-de-q-verçosa-ab24b5210)
+[Linkedin](linkedin.com/in/jpvercosa)
 
 
